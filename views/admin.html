@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solicitudes | Talento+</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/admin.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">Talento<span>+</span></a>
+    <div class="header-actions"><span class="admin-label">Panel de reclutamiento</span><button id="logout-button" class="button button-outline button-small">Cerrar sesión</button></div>
+  </header>
+  <main class="admin-shell">
+    <div class="admin-heading">
+      <div><p class="eyebrow">Gestión de talento</p><h1>Solicitudes recibidas</h1><p>Consulta y revisa los perfiles de las personas postulantes.</p></div>
+      <span id="application-count" class="count-badge">0 solicitudes</span>
+    </div>
+    <div id="admin-message" class="notice notice-error" role="status" hidden></div>
+    <section class="table-card">
+      <div class="table-toolbar">
+        <label class="search-field"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar por nombre o puesto…" aria-label="Buscar por nombre o puesto"></label>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Postulante</th><th>Puesto solicitado</th><th>Contacto</th><th>Fecha de registro</th><th><span class="sr-only">Acción</span></th></tr></thead>
+          <tbody id="applications-body"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty-state" hidden><span aria-hidden="true">◎</span><h2>No hay solicitudes</h2><p>Cuando recibas postulaciones, aparecerán en esta lista.</p></div>
+    </section>
+  </main>
+  <dialog id="detail-dialog" class="detail-dialog">
+    <div class="dialog-header"><div><p class="eyebrow">Perfil del candidato</p><h2 id="detail-title">Detalle de solicitud</h2></div><button id="close-dialog" class="icon-button" aria-label="Cerrar detalle">×</button></div>
+    <div id="detail-content" class="detail-content"></div>
+  </dialog>
+</body>
+</html>

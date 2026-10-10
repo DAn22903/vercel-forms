@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Formulario de solicitud de empleo">
+  <title>Solicitud de empleo</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/application.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">Talento<span>+</span></a>
+    <a class="header-link" href="/admin">Acceso de RR. HH.</a>
+  </header>
+  <main class="page-shell">
+    <section class="intro">
+      <p class="eyebrow">Únete a nuestro equipo</p>
+      <h1>Solicitud de empleo</h1>
+      <p>Completa tus datos para que podamos conocerte mejor. Los campos marcados con <strong>*</strong> son obligatorios.</p>
+    </section>
+    <div id="form-message" class="notice" role="status" aria-live="polite" hidden></div>
+    <form id="application-form">
+      <section class="form-section">
+        <div class="section-heading"><span>01</span><div><h2>Datos personales</h2><p>Información para ponernos en contacto contigo.</p></div></div>
+        <div class="form-grid">
+          <label class="field field-wide">Nombre completo *<input name="nombre_completo" autocomplete="name" maxlength="150" required></label>
+          <label class="field">Correo electrónico *<input name="correo_electronico" type="email" autocomplete="email" maxlength="254" required></label>
+          <label class="field">Teléfono *<input name="telefono" type="tel" autocomplete="tel" pattern="[+0-9 ().-]{7,30}" maxlength="30" required></label>
+          <label class="field field-wide">Dirección *<input name="direccion" autocomplete="street-address" maxlength="255" required></label>
+          <label class="field">Fecha de nacimiento *<input name="fecha_nacimiento" type="date" required></label>
+          <label class="field">CURP / RFC / DNI *<input name="curp_rfc_dni" maxlength="30" required></label>
+          <label class="field">Estado civil *<select name="estado_civil" required><option value="">Selecciona una opción</option><option>Soltero/a</option><option>Casado/a</option><option>Unión libre</option><option>Divorciado/a</option><option>Viudo/a</option><option>Prefiero no decirlo</option></select></label>
+        </div>
+      </section>
+      <section class="form-section">
+        <div class="section-heading"><span>02</span><div><h2>Puesto solicitado</h2><p>Cuéntanos qué oportunidad estás buscando.</p></div></div>
+        <div class="form-grid">
+          <label class="field">Puesto solicitado *<input name="puesto_solicitado" maxlength="150" required></label>
+          <label class="field">Sueldo deseado<input name="sueldo_deseado" type="number" min="0" max="9999999999.99" step="0.01" placeholder="Opcional"></label>
+          <label class="field field-wide">Disponibilidad de horario *<input name="disponibilidad_horario" maxlength="100" placeholder="Ej. Tiempo completo, turnos rotativos" required></label>
+        </div>
+      </section>
+      <section class="form-section">
+        <div class="section-heading"><span>03</span><div><h2>Educación</h2><p>Tu formación académica más reciente.</p></div></div>
+        <div class="form-grid">
+          <label class="field">Nivel de estudios *<input name="nivel_estudios" maxlength="100" placeholder="Ej. Licenciatura" required></label>
+          <label class="field">Institución *<input name="institucion_educativa" maxlength="180" required></label>
+          <label class="field">Estado de estudios *<select name="estado_estudios" required><option value="">Selecciona una opción</option><option value="concluido">Concluido</option><option value="en_curso">En curso</option></select></label>
+        </div>
+      </section>
+      <section class="form-section">
+        <div class="section-heading"><span>04</span><div><h2>Experiencia laboral</h2><p>Comparte información de tu empleo anterior más reciente.</p></div></div>
+        <div class="form-grid">
+          <label class="field">Empresa anterior *<input name="empresa_anterior" maxlength="180" required></label>
+          <label class="field">Puesto anterior *<input name="puesto_anterior" maxlength="150" required></label>
+          <label class="field">Tiempo trabajado *<input name="tiempo_trabajado" maxlength="100" placeholder="Ej. 2 años" required></label>
+          <label class="field">Teléfono de contacto *<input name="telefono_contacto_laboral" type="tel" pattern="[+0-9 ().-]{7,30}" maxlength="30" required></label>
+          <label class="field field-wide">Motivo de salida *<input name="motivo_salida" maxlength="255" required></label>
+        </div>
+      </section>
+      <section class="form-section">
+        <div class="section-heading"><span>05</span><div><h2>Referencia personal o laboral</h2><p>Una persona que pueda compartir referencias sobre ti.</p></div></div>
+        <div class="form-grid">
+          <label class="field">Nombre de referencia *<input name="nombre_referencia" maxlength="150" required></label>
+          <label class="field">Teléfono de referencia *<input name="telefono_referencia" type="tel" pattern="[+0-9 ().-]{7,30}" maxlength="30" required></label>
+          <label class="field">Relación / parentesco *<input name="relacion_referencia" maxlength="100" required></label>
+        </div>
+      </section>
+      <div class="form-footer">
+        <p>Al enviar, autorizas el uso de estos datos para el proceso de selección.</p>
+        <button class="button button-primary" type="submit">Enviar solicitud <span aria-hidden="true">→</span></button>
+      </div>
+    </form>
+  </main>
+  <footer class="site-footer">Gracias por tu interés en formar parte del equipo.</footer>
+</body>
+</html>
