@@ -48,6 +48,7 @@ app.disable('x-powered-by');
 app.use(helmet());
 app.use(express.json({ limit: '20kb' }));
 app.use(express.urlencoded({ extended: false, limit: '20kb' }));
+app.use(express.static(publicDirectory));
 app.use((req, res, next) => {
   initializeDatabase().then(() => next(), next);
 });
@@ -67,7 +68,6 @@ app.use(session({
 
 app.use('/api/applications', applicationRoutes);
 app.use('/api/admin', adminRoutes);
-app.use(express.static(publicDirectory));
 
 app.get('/admin', (req, res) => {
   if (req.session.isAdmin) {
