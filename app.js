@@ -4,6 +4,7 @@ const { readFile } = require('node:fs/promises');
 const path = require('node:path');
 const express = require('express');
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const helmet = require('helmet');
 const pool = require('./config/db');
 const applicationRoutes = require('./routes/applicationRoutes');
@@ -22,14 +23,38 @@ if (process.env.SESSION_SECRET.length < 32) {
 const app = express();
 const port = Number(process.env.PORT || 3000);
 const publicDirectory = path.join(__dirname, 'public');
+const sessionStore = new MySQLStore({}, pool);
+let databaseInitialization;
+
+async function initializeDatabase() {
+  if (!databaseInitialization) {
+    databaseInitialization = (async () => {
+      const schema = await readFile(path.join(__dirname, 'database', 'schema.sql'), 'utf8');
+      await pool.query(schema);
+      await sessionStore.onReady();
+      console.log('Tablas de solicitudes y sesiones listas.');
+    })();
+  }
+
+  try {
+    await databaseInitialization;
+  } catch (error) {
+    databaseInitialization = undefined;
+    throw error;
+  }
+}
 
 app.disable('x-powered-by');
 app.use(helmet());
 app.use(express.json({ limit: '20kb' }));
 app.use(express.urlencoded({ extended: false, limit: '20kb' }));
+app.use((req, res, next) => {
+  initializeDatabase().then(() => next(), next);
+});
 app.use(session({
   name: 'recruit.sid',
   secret: process.env.SESSION_SECRET,
+  store: sessionStore,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -61,15 +86,17 @@ app.use((error, req, res, next) => {
 });
 
 async function start() {
-  const schema = await readFile(path.join(__dirname, 'database', 'schema.sql'), 'utf8');
-  await pool.query(schema);
-  console.log('Tabla solicitudes_empleo lista.');
+  await initializeDatabase();
   app.listen(port, () => {
     console.log(`Aplicación lista en http://localhost:${port}`);
   });
 }
 
-start().catch((error) => {
-  console.error('No se pudo iniciar la aplicación o conectar con MySQL:', error);
-  process.exitCode = 1;
-});
+if (process.env.NODE_ENV !== 'production') {
+  start().catch((error) => {
+    console.error('No se pudo iniciar la aplicación o conectar con MySQL:', error);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = app;
